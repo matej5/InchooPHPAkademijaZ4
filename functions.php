@@ -13,12 +13,12 @@ function getAll($z)
 {
     foreach ($z as $rez)
     {
-        echo 'Id: ', $rez->getId(), "\n";
-        echo 'Ime: ', $rez->getIme(), "\n";
-        echo 'Prezime: ', $rez->getPrezime(), "\n";
-        echo 'Datum rođenja: ', $rez->getDatumRođenja(), "\n";
-        echo 'Spol: ', $rez->getSpol(), "\n";
-        echo 'Mjesečna primanja: ', $rez->getMjesečnaPrimanja(), "\n";
+        echo "Id: \t\t\t", $rez->getId(), "\n";
+        echo "Ime: \t\t\t", $rez->getIme(), "\n";
+        echo "Prezime: \t\t", $rez->getPrezime(), "\n";
+        echo "Datum rodenja: \t\t", $rez->getDatumRođenja(), "\n";
+        echo "Spol: \t\t\t", $rez->getSpol(), "\n";
+        echo "Mjesecna primanja: \t", $rez->getMjesečnaPrimanja(), "\n";
     }
 }
 
@@ -85,4 +85,20 @@ function proPri($z)
     $pro = $payment/$count;
 
     return str_replace('.',',', $pro);
+}
+
+function changeZaposlenik($id, $z)
+{
+    $z[$id-1]->setIme(setString('ime'));
+    $z[$id-1]->setPrezime(setString('prezime'));
+    $z[$id-1]->setDatumRođenja(setDate());
+    $z[$id-1]->setSpol(setSpol());
+    $z[$id-1]->setMjesečnaPrimanja(setDecimal());
+    return $z;
+}
+
+function deleteZaposlenik($id, $z)
+{
+    unset($z[$id-1]);
+    return $z;
 }

@@ -29,10 +29,14 @@ for (; ;) {
             }
             break;
         case '3':
-            print_r($zaposlenici);
+            echo "Unesite id zaposlenika kojeg zelite izmjeniti: ";
+            $x = readline();
+            changeZaposlenik($x, $zaposlenici);
             break;
         case '4':
-
+            echo "Unesite id zaposlenika kojeg zelite obrisati: ";
+            $x = readline();
+            $zaposlenici = deleteZaposlenik($x, $zaposlenici);
             break;
         case '5':
             for (; $x != 'b';) {
