@@ -2,13 +2,6 @@
 
 include_once 'Zaposlenik.php';
 
-
-function ex()
-{
-    echo "Exiting!\n";
-    exit();
-}
-
 function getAll($z)
 {
     foreach ($z as $rez) {
@@ -25,9 +18,9 @@ function set()
 {
     $z = new Zaposlenik();
     $z->setId();
-//    $z->setIme(setString('ime'));
-//    $z->setPrezime(setString('prezime'));
-//    $z->setDatumRođenja(setDate());
+    $z->setIme(setString('ime'));
+    $z->setPrezime(setString('prezime'));
+    $z->setDatumRođenja(setDate());
     $z->setSpol(setSpol());
     $z->setMjesečnaPrimanja(setDecimal());
     return $z;

@@ -4,7 +4,7 @@ include_once 'Zaposlenik.php';
 include_once 'functions.php';
 $first = true;
 $zaposlenici[] = array();
-$x;
+$x = null;
 for (; ;) {
     echo "
           1. Pregled Zaposlenika\n
@@ -16,7 +16,8 @@ for (; ;) {
     $x = readline();
     switch ($x) {
         case 'e':
-            ex();
+            echo "Exiting!\n";
+            exit();
         case '1':
             getAll($zaposlenici);
             break;
@@ -49,7 +50,8 @@ for (; ;) {
                 $x = readline();
                 switch ($x) {
                     case 'e':
-                        ex();
+                        echo "Exiting!\n";
+                        exit();
                     case '1':
                         echo ukupStar($zaposlenici);
                         break;
@@ -57,7 +59,7 @@ for (; ;) {
                         echo proStar($zaposlenici);
                         break;
                     case '3':
-                        var_dump($zaposlenici[0]->getDatumRođenja());
+
                         break;
                     case '4':
                         proPri($zaposlenici);
