@@ -3,14 +3,10 @@
 include_once 'Zaposlenik.php';
 include_once 'functions.php';
 
-
-echo ucfirst(substr(str_shuffle(str_repeat("abcdefghijklmnopqrstuvwxyz", 5)), 0, 5));
-
-$first = true;
 $zaposlenici[] = array();
 
 //generator for inserting multiple
-for ($i=0;$i<10;$i++){
+for ($i=0;$i<100;$i++){
     $zaposlenici[$i] = zaposleniciGenerator($zaposlenici);
 }
 
@@ -30,7 +26,11 @@ for (; ;) {
             echo "Exiting!\n";
             exit();
         case '1':
-            getAll($zaposlenici);
+            if (empty($zaposlenici[0])) {
+                echo "Nema unesenih zaposlenika!\n";
+            } else {
+                getAll($zaposlenici);
+            }
             break;
         case '2':
             if (empty($zaposlenici[0])) {
@@ -70,7 +70,7 @@ for (; ;) {
                         echo proStar($zaposlenici);
                         break;
                     case '3':
-
+                        ukuPri($zaposlenici);
                         break;
                     case '4':
                         proPri($zaposlenici);

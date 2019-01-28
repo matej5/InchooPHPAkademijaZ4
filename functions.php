@@ -1,16 +1,15 @@
 <?php
 
-include_once 'Zaposlenik.php';
-
 function getAll($z)
 {
     foreach ($z as $rez) {
         echo "Id: \t\t\t", $rez->getId(), "\n";
         echo "Ime: \t\t\t", $rez->getIme(), "\n";
         echo "Prezime: \t\t", $rez->getPrezime(), "\n";
-        echo "Datum rodenja: \t\t", $rez->getDatumRođenja()->format('d. m. Y'), "\n";
+        echo "Datum rodenja: \t\t", $rez->getDatumRodenja()->format('d. m. Y'), "\n";
         echo "Spol: \t\t\t", $rez->getSpol(), "\n";
-        echo "Mjesecna primanja: \t", $rez->getMjesečnaPrimanja(), "\n";
+        echo "Mjesecna primanja: \t", $rez->getMjesecnaPrimanja(), "\n";
+        echo "________________________________________________\n\n";
     }
 }
 
@@ -19,9 +18,9 @@ function set()
     $z = new Zaposlenik();
     $z->setIme(setString('ime'));
     $z->setPrezime(setString('prezime'));
-    $z->setDatumRođenja(setDate());
+    $z->setDatumRodenja(setDate());
     $z->setSpol(setSpol());
-    $z->setMjesečnaPrimanja(setDecimal());
+    $z->setMjesecnaPrimanja(setDecimal());
     return $z;
 }
 
@@ -41,7 +40,6 @@ function setDate()
     do {
         echo 'Unesite datum rodenja: ';
         $d = readline();
-
         $date = DateTime::createFromFormat("d. m. Y", $d);
         $errors = DateTime::getLastErrors();
     } while ($errors['warning_count'] + $errors['error_count'] > 0);
@@ -72,15 +70,15 @@ function changeZaposlenik($id, $z)
     echo "Id: \t\t\t", $z[$id - 1]->getId(), "\n";
     echo "Ime: \t\t\t", $z[$id - 1]->getIme(), "\n";
     echo "Prezime: \t\t", $z[$id - 1]->getPrezime(), "\n";
-    echo "Datum rodenja: \t\t", $z[$id - 1]->getDatumRođenja()->format('d. m. Y'), "\n";
+    echo "Datum rodenja: \t\t", $z[$id - 1]->getDatumRodenja()->format('d. m. Y'), "\n";
     echo "Spol: \t\t\t", $z[$id - 1]->getSpol(), "\n";
-    echo "Mjesecna primanja: \t", $z[$id - 1]->getMjesečnaPrimanja(), "\n";
+    echo "Mjesecna primanja: \t", $z[$id - 1]->getMjesecnaPrimanja(), "\n";
     echo "Unos novih\n";
     $z[$id - 1]->setIme(setString('ime'));
     $z[$id - 1]->setPrezime(setString('prezime'));
-    $z[$id - 1]->setDatumRođenja(setDate());
+    $z[$id - 1]->setDatumRodenja(setDate());
     $z[$id - 1]->setSpol(setSpol());
-    $z[$id - 1]->setMjesečnaPrimanja(setDecimal());
+    $z[$id - 1]->setMjesecnaPrimanja(setDecimal());
     return $z;
 }
 
@@ -113,7 +111,7 @@ function ukupStar($z)
     $month = ($date / 30);
     $month = floor($month);
     $days = ($date % 30);
-    $str = $days . ". " . $month . ". " . $year;
+    $str = $year . " g. " . $month . " m. " . $days." d.";
 
     return $str;
 }
@@ -126,7 +124,7 @@ function proStar($z)
     }
     $year = ($date / 365);
     $year /= count($z);
-    return $year;
+    return "Prosjecna starost u godinama(zaokruzeno): ".floor($year);
 }
 
 function proPri($z)
@@ -137,10 +135,10 @@ function proPri($z)
     $paymentFemale = 0;
     foreach ($z as $rez) {
         if ($rez->getSpol() === 'm') {
-            $paymentMale += floatval(number_format(floatval(str_replace(',', '.', $rez->getMjesečnaPrimanja())), 2));
+            $paymentMale += floatval(number_format(floatval(str_replace(',', '.', $rez->getMjesecnaPrimanja())), 2));
             $m++;
         } elseif ($rez->getSpol() === 'f') {
-            $paymentFemale += floatval(number_format(floatval(str_replace(',', '.', $rez->getMjesečnaPrimanja())), 2));
+            $paymentFemale += floatval(number_format(floatval(str_replace(',', '.', $rez->getMjesecnaPrimanja())), 2));
             $f++;
         }
 
@@ -150,7 +148,31 @@ function proPri($z)
 
     echo "Prosjecna primanja muskaraca je ", str_replace('.', ',', $proM), "kn\n";
     echo "Prosjecna primanja zena je ", str_replace('.', ',', $proF), "kn\n";
-    echo ($proM - $proF > 0) ? "Muskaeci zaraduju " . str_replace('.', ',', $proM - $proF) . "kune/na vise kn od zena\n" : "Zene zaraduju " . str_replace('.', ',', $proF - $proM) . "kune/na vise kn od muskaraca\n";
+    echo ($proM - $proF > 0) ? "Muskarci zaraduju " . str_replace('.', ',', $proM - $proF) . "kune/na vise kn od zena\n" : "Zene zaraduju " . str_replace('.', ',', $proF - $proM) . "kune/a vise kn od muskaraca\n";
+}
+
+function ukuPri($z)
+{
+    $a = 0;
+    $b = 0;
+    $c = 0;
+    $d = 0;
+    foreach ($z as $rez) {
+        $g = $rez->getAge()/365;
+        if ($g<20) {
+            $a += floatval(str_replace(',', '.', $rez->getMjesecnaPrimanja()));
+        }elseif($g<30){
+            $b += floatval(str_replace(',', '.', $rez->getMjesecnaPrimanja()));
+        }elseif ($g<40) {
+            $c += floatval(str_replace(',', '.', $rez->getMjesecnaPrimanja()));
+        }else{
+            $d += floatval(str_replace(',', '.', $rez->getMjesecnaPrimanja()));
+        }
+    }
+    echo "Ukupna primanja osoba do 20 godina: ", str_replace('.', ',', $a),"kn\n";
+    echo "Ukupna primanja osoba od 20 do 30 godina: ", str_replace('.', ',', $b),"kn\n";
+    echo "Ukupna primanja osoba od 30 do 40 godina: ", str_replace('.', ',', $c),"kn\n";
+    echo "Ukupna primanja osoba od 40 pa na dalje godina: ", str_replace('.', ',', $d),"kn\n";
 }
 
 
@@ -161,9 +183,9 @@ function zaposleniciGenerator($z)
         $z = new Zaposlenik();
         $z->setIme(ucfirst(substr(str_shuffle(str_repeat("abcdefghijklmnopqrstuvwxyz", 5)), 0, 5)));
         $z->setPrezime(ucfirst(substr(str_shuffle(str_repeat("abcdefghijklmnopqrstuvwxyz", 5)), 0, 5)));
-        $z->setDatumRođenja(DateTime::createFromFormat("d. m. Y", rand(1, 28) . '.' . rand(1, 12) . '.' . rand(1956, 2018)));
+        $z->setDatumRodenja(DateTime::createFromFormat("d. m. Y", rand(1, 28) . '.' . rand(1, 12) . '.' . rand(1956, 2018)));
         $z->setSpol((rand(0, 1) === 1) ? 'm' : 'f');
-        $z->setMjesečnaPrimanja(floatval(number_format(floatval(str_replace(',', '.', rand(1000, 100000) / 100)), 2)));
+        $z->setMjesecnaPrimanja(str_replace('.', ',', (floatval(number_format(rand(1000, 100000) / 100, 2)))));
 
 
         //$z = new Zaposlenik($ime, $prezime, $datum, $spol, $mjes);

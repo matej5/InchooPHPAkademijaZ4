@@ -13,23 +13,23 @@ class Zaposlenik
     private $id;
     private $ime;
     private $prezime;
-    private $datumRođenja;
+    private $datumRodenja;
     private $spol;
-    private $mjesečnaPrimanja;
+    private $mjesecnaPrimanja;
 
     function __construct()
     {
         $this->id = IdGenerator::getInstance();
     }
 
-    function __construct1($ime, $prezime, $datumRođenja, $spol, $mjesečnaPrimanja)
+    function __construct1($ime, $prezime, $datumRocenja, $spol, $mjesenaPrimanja)
     {
         $this->id = IdGenerator::getInstance();
         $this->ime = $ime;
         $this->prezime = $prezime;
-        $this->datumRođenja = $datumRođenja;
+        $this->datumRodenja = $datumRodenja;
         $this->spol = $spol;
-        $this->mjesečnaPrimanja = $mjesečnaPrimanja;
+        $this->mjesecnaPrimanja = $mjesecnaPrimanja;
     }
 
     /**
@@ -75,17 +75,17 @@ class Zaposlenik
     /**
      * @param mixed $datumRođenja
      */
-    public function setDatumRođenja($datumRođenja)
+    public function setDatumRodenja($datumRodenja)
     {
-        $this->datumRođenja = $datumRođenja;
+        $this->datumRodenja = $datumRodenja;
     }
 
     /**
      * @return mixed
      */
-    public function getDatumRođenja()
+    public function getDatumRodenja()
     {
-        return $this->datumRođenja;
+        return $this->datumRodenja;
     }
 
     /**
@@ -107,25 +107,24 @@ class Zaposlenik
     /**
      * @return mixed
      */
-    public function getMjesečnaPrimanja()
+    public function getMjesecnaPrimanja()
     {
-        return $this->mjesečnaPrimanja;
+        return $this->mjesecnaPrimanja;
     }
 
     /**
-     * @param mixed $mjesečnaPrimanja
+     * @param mixed $mjesecnaPrimanja
      */
-    public function setMjesečnaPrimanja($mjesečnaPrimanja)
+    public function setMjesecnaPrimanja($mjesecnaPrimanja)
     {
-        $this->mjesečnaPrimanja = $mjesečnaPrimanja;
+        $this->mjesecnaPrimanja = $mjesecnaPrimanja;
     }
 
     public function getAge()
     {
-        $date = $this->datumRođenja;
+        $date = $this->datumRodenja;
         $now = new DateTime('NOW');
         $interval = $date->diff($now)->format('%a');
         return intval($interval);
     }
-
 }
