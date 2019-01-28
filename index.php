@@ -3,13 +3,12 @@
 include_once 'Zaposlenik.php';
 include_once 'functions.php';
 
-$zaposlenici[] = array();
+$zaposlenici = [];
 
 //generator for inserting multiple
-for ($i=0;$i<100;$i++){
-    $zaposlenici[$i] = zaposleniciGenerator($zaposlenici);
-}
-
+//for ($i=0;$i<100;$i++){
+//    $zaposlenici[$i] = zaposleniciGenerator($zaposlenici);
+//}
 
 $x = null;
 for (; ;) {
@@ -18,7 +17,8 @@ for (; ;) {
           2. Unos novog Zaposlenika\n
           3. Promjena podataka postojecem zaposleniku\n
           4. Brisanje Zaposlenika\n
-          5. Statistika\n";
+          5. Statistika\n
+          e. Exit\n";
     echo 'Z4: ';
     $x = readline();
     switch ($x) {
@@ -26,14 +26,14 @@ for (; ;) {
             echo "Exiting!\n";
             exit();
         case '1':
-            if (empty($zaposlenici[0])) {
+            if (count($zaposlenici) === 0) {
                 echo "Nema unesenih zaposlenika!\n";
             } else {
                 getAll($zaposlenici);
             }
             break;
         case '2':
-            if (empty($zaposlenici[0])) {
+            if (count($zaposlenici) === 0) {
                 $zaposlenici[0] = set();
             } else {
                 $zaposlenici[] = set();
@@ -64,16 +64,32 @@ for (; ;) {
                         echo "Exiting!\n";
                         exit();
                     case '1':
-                        echo ukupStar($zaposlenici);
+                        if (count($zaposlenici) === 0) {
+                            echo "Nema unesenih zaposlenika!\n";
+                        } else {
+                            echo ukupStar($zaposlenici);
+                        }
                         break;
                     case '2':
-                        echo proStar($zaposlenici);
+                        if (count($zaposlenici) === 0) {
+                            echo "Nema unesenih zaposlenika!\n";
+                        } else {
+                            echo proStar($zaposlenici);
+                        }
                         break;
                     case '3':
-                        ukuPri($zaposlenici);
+                        if (count($zaposlenici) === 0) {
+                            echo "Nema unesenih zaposlenika!\n";
+                        } else {
+                            ukuPri($zaposlenici);
+                        }
                         break;
                     case '4':
-                        proPri($zaposlenici);
+                        if (count($zaposlenici) === 0) {
+                            echo "Nema unesenih zaposlenika!\n";
+                        } else {
+                            proPri($zaposlenici);
+                        }
                         break;
                     case 'b':
                         echo "Going Back!";

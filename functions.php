@@ -66,36 +66,50 @@ function setDecimal()
 
 function changeZaposlenik($id, $z)
 {
-    echo "Stare vrijednosti\n";
-    echo "Id: \t\t\t", $z[$id - 1]->getId(), "\n";
-    echo "Ime: \t\t\t", $z[$id - 1]->getIme(), "\n";
-    echo "Prezime: \t\t", $z[$id - 1]->getPrezime(), "\n";
-    echo "Datum rodenja: \t\t", $z[$id - 1]->getDatumRodenja()->format('d. m. Y'), "\n";
-    echo "Spol: \t\t\t", $z[$id - 1]->getSpol(), "\n";
-    echo "Mjesecna primanja: \t", $z[$id - 1]->getMjesecnaPrimanja(), "\n";
-    echo "Unos novih\n";
-    $z[$id - 1]->setIme(setString('ime'));
-    $z[$id - 1]->setPrezime(setString('prezime'));
-    $z[$id - 1]->setDatumRodenja(setDate());
-    $z[$id - 1]->setSpol(setSpol());
-    $z[$id - 1]->setMjesecnaPrimanja(setDecimal());
+    foreach ($z as $rez) {
+        if($rez->getId() == $id){
+            echo "Stare vrijednosti\n";
+            echo "Id: \t\t\t", $rez->getId(), "\n";
+            echo "Ime: \t\t\t", $rez->getIme(), "\n";
+            echo "Prezime: \t\t", $rez->getPrezime(), "\n";
+            echo "Datum rodenja: \t\t", $rez->getDatumRodenja()->format('d. m. Y'), "\n";
+            echo "Spol: \t\t\t", $rez->getSpol(), "\n";
+            echo "Mjesecna primanja: \t", $rez->getMjesecnaPrimanja(), "\n";
+            echo "Unos novih\n";
+            $rez->setIme(setString('ime'));
+            $rez->setPrezime(setString('prezime'));
+            $rez->setDatumRodenja(setDate());
+            $rez->setSpol(setSpol());
+            $rez->setMjesecnaPrimanja(setDecimal());
+            return $z;
+        }
+    }
+    echo "Ne postoji taj zaposlenk.";
     return $z;
 }
 
 function deleteZaposlenik($id, $z)
 {
-    do {
-        echo 'Jeste li sigurni da cete obrisati osobu s id = ', $id, ' (y/n): ';
-        $x = readline();
-        if ($x === 'y') {
-            unset($z[$id - 1]);
-            return $z;
-        } elseif ($x === 'n') {
-            return $z;
-        } else {
-            echo "Pogresan unos\n";
+    $num =count($z);
+    for($i =0;$i<$num;$i++){
+        if($z[$i]->getId() == $id)
+        {
+            do {
+                echo 'Jeste li sigurni da cete obrisati osobu s id = ', $id, ' (y/n): ';
+                $x = readline();
+                if ($x === 'y') {
+                    unset($z[$i]);
+                    return $z;
+                } elseif ($x === 'n') {
+                    return $z;
+                } else {
+                    echo "Pogresan unos\n";
+                }
+            } while (true);
         }
-    } while (true);
+    }
+    echo "Ne postoji taj zaposlenk.";
+    return $z;
 }
 
 function ukupStar($z)
@@ -143,8 +157,17 @@ function proPri($z)
         }
 
     }
-    $proM = $paymentMale / $m;
-    $proF = $paymentFemale / $f;
+    if ($m !== 0) {
+        $proM = $paymentMale / $m;
+    }else{
+        $proM = 0;
+    }
+
+    if ($f !== 0) {
+        $proF = $paymentFemale / $m;
+    }else{
+        $proF = 0;
+    }
 
     echo "Prosjecna primanja muskaraca je ", str_replace('.', ',', $proM), "kn\n";
     echo "Prosjecna primanja zena je ", str_replace('.', ',', $proF), "kn\n";
