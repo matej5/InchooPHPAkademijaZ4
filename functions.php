@@ -17,7 +17,6 @@ function getAll($z)
 function set()
 {
     $z = new Zaposlenik();
-    $z->setId();
     $z->setIme(setString('ime'));
     $z->setPrezime(setString('prezime'));
     $z->setDatumRođenja(setDate());
@@ -151,5 +150,22 @@ function proPri($z)
 
     echo "Prosjecna primanja muskaraca je ", str_replace('.', ',', $proM), "kn\n";
     echo "Prosjecna primanja zena je ", str_replace('.', ',', $proF), "kn\n";
-    echo ($proM-$proF>0) ? "Muskaeci zaraduju ". str_replace('.', ',', $proM-$proF). "kune/na vise kn od zena\n" : "Zene zaraduju ". str_replace('.', ',', $proF-$proM). "kune/na vise kn od muskaraca\n";
+    echo ($proM - $proF > 0) ? "Muskaeci zaraduju " . str_replace('.', ',', $proM - $proF) . "kune/na vise kn od zena\n" : "Zene zaraduju " . str_replace('.', ',', $proF - $proM) . "kune/na vise kn od muskaraca\n";
+}
+
+
+//Code for generating n zaposlenici
+
+function zaposleniciGenerator($z)
+{
+        $z = new Zaposlenik();
+        $z->setIme(ucfirst(substr(str_shuffle(str_repeat("abcdefghijklmnopqrstuvwxyz", 5)), 0, 5)));
+        $z->setPrezime(ucfirst(substr(str_shuffle(str_repeat("abcdefghijklmnopqrstuvwxyz", 5)), 0, 5)));
+        $z->setDatumRođenja(DateTime::createFromFormat("d. m. Y", rand(1, 28) . '.' . rand(1, 12) . '.' . rand(1956, 2018)));
+        $z->setSpol((rand(0, 1) === 1) ? 'm' : 'f');
+        $z->setMjesečnaPrimanja(floatval(number_format(floatval(str_replace(',', '.', rand(1000, 100000) / 100)), 2)));
+
+
+        //$z = new Zaposlenik($ime, $prezime, $datum, $spol, $mjes);
+    return $z;
 }

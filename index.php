@@ -2,8 +2,19 @@
 
 include_once 'Zaposlenik.php';
 include_once 'functions.php';
+
+
+echo ucfirst(substr(str_shuffle(str_repeat("abcdefghijklmnopqrstuvwxyz", 5)), 0, 5));
+
 $first = true;
 $zaposlenici[] = array();
+
+//generator for inserting multiple
+for ($i=0;$i<10;$i++){
+    $zaposlenici[$i] = zaposleniciGenerator($zaposlenici);
+}
+
+
 $x = null;
 for (; ;) {
     echo "

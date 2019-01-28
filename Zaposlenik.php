@@ -19,7 +19,17 @@ class Zaposlenik
 
     function __construct()
     {
+        $this->id = IdGenerator::getInstance();
+    }
 
+    function __construct1($ime, $prezime, $datumRođenja, $spol, $mjesečnaPrimanja)
+    {
+        $this->id = IdGenerator::getInstance();
+        $this->ime = $ime;
+        $this->prezime = $prezime;
+        $this->datumRođenja = $datumRođenja;
+        $this->spol = $spol;
+        $this->mjesečnaPrimanja = $mjesečnaPrimanja;
     }
 
     /**
@@ -28,14 +38,6 @@ class Zaposlenik
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * @param mixed $id
-     */
-    public function setId()
-    {
-        $this->id = IdGenerator::getInstance();
     }
 
     /**
