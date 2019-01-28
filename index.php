@@ -2,11 +2,10 @@
 
 include_once 'Zaposlenik.php';
 include_once 'functions.php';
-
 $first = true;
 $zaposlenici[] = array();
 $x;
-for (;;) {
+for (; ;) {
     echo "
           1. Pregled Zaposlenika\n
           2. Unos novog Zaposlenika\n
@@ -22,9 +21,9 @@ for (;;) {
             getAll($zaposlenici);
             break;
         case '2':
-            if (empty($zaposlenici[0])){
+            if (empty($zaposlenici[0])) {
                 $zaposlenici[0] = set();
-            }else{
+            } else {
                 $zaposlenici[] = set();
             }
             break;
@@ -55,13 +54,13 @@ for (;;) {
                         echo ukupStar($zaposlenici);
                         break;
                     case '2':
-                        var_dump($zaposlenici[0]->getAge());
+                        echo proStar($zaposlenici);
                         break;
                     case '3':
                         var_dump($zaposlenici[0]->getDatumRođenja());
                         break;
                     case '4':
-                        echo proPri($zaposlenici);
+                        proPri($zaposlenici);
                         break;
                     case 'b':
                         echo "Going Back!";
@@ -70,7 +69,6 @@ for (;;) {
                         echo "Not valid input!";
                 }
             }
-
             break;
         default:
             echo "Not valid input!";
