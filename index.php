@@ -6,7 +6,7 @@ include_once 'functions.php';
 $first = true;
 $zaposlenici[] = array();
 $x;
-for (; ;) {
+for (;;) {
     echo "
           1. Pregled Zaposlenika\n
           2. Unos novog Zaposlenika\n
@@ -52,13 +52,13 @@ for (; ;) {
                     case 'e':
                         ex();
                     case '1':
-
+                        echo ukupStar($zaposlenici);
                         break;
                     case '2':
-
+                        var_dump($zaposlenici[0]->getAge());
                         break;
                     case '3':
-
+                        var_dump($zaposlenici[0]->getDatumRođenja());
                         break;
                     case '4':
                         echo proPri($zaposlenici);

@@ -83,7 +83,7 @@ class Zaposlenik
      */
     public function getDatumRođenja()
     {
-        return date_format( $this->datumRođenja,"d. m. Y");
+        return $this->datumRođenja;
     }
 
     /**
@@ -117,4 +117,13 @@ class Zaposlenik
     {
         $this->mjesečnaPrimanja = $mjesečnaPrimanja;
     }
+
+    public function getAge()
+    {
+        $date = $this->datumRođenja;
+        $now = new DateTime('NOW');
+        $interval = $date->diff($now)->format('%a');
+        return intval($interval);
+    }
+
 }
